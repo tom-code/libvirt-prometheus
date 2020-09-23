@@ -64,18 +64,18 @@ func (c myCollector) Collect(ch chan<- prometheus.Metric) {
 
 func main() {
   conn, err := net.DialTimeout("unix", "/var/run/libvirt/libvirt-sock", 2*time.Second)
-	if err != nil {
-		log.Fatalf("failed to dial libvirt: %v", err)
+  if err != nil {
+    log.Fatalf("failed to dial libvirt: %v", err)
   }
   virt = libvirt.New(conn)
-	if err := virt.Connect(); err != nil {
-		log.Fatalf("failed to connect: %v", err)
+  if err := virt.Connect(); err != nil {
+    log.Fatalf("failed to connect: %v", err)
   }
   
   version, err := virt.Version()
-	if err != nil {
-		log.Fatalf("failed to retrieve libvirt version: %v", err)
-	}
+  if err != nil {
+    log.Fatalf("failed to retrieve libvirt version: %v", err)
+  }
   log.Println("libvirt ersion:", version)
   
   cache = map[string]uint64{}
