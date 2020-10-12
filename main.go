@@ -45,11 +45,16 @@ func (c myCollector) Collect(ch chan<- prometheus.Metric) {
       continue
     }
     if cputime == 0 {
+      delete(cache, domain.Name)
       continue
     }
     last, ok := cache[domain.Name]
     if !ok {
       cache[domain.Name] = cputime
+      continue
+    }
+    if cputime < last {
+      delete(cache, domain.Name)
       continue
     }
     diff := float64(cputime - last)/1000000000
